@@ -6,6 +6,10 @@ int main(){
     vector<vector<pair<int,int>>> adj = {{{1,4},{2,4}},{{0,4},{2,2}},{{0,4},{1,2},{3,3},{5,6},{4,1}},{{2,3},{5,2}},{{2,1},{5,3}},{{3,2},{4,3},{2,6}}};
     set<pair<int,int>> st;
     vector<int> dist(v,1e9);
+    vector<int> parent(v);
+    for(int i=0;i<v;i++){
+        parent[i] = i; 
+    }
     dist[s] = 0;
     st.insert(make_pair(0,s));
     while(!st.empty()){
@@ -20,10 +24,22 @@ int main(){
                 }
                 dist[node_adj] = dist[node] + w;
                 st.insert(make_pair(dist[node_adj],node_adj));
+                parent[node_adj] = node;
             }
         }
     }
     for(auto it : dist)
         cout<<it<<" ";
+    cout<<endl;
+    int i = 5;
+    vector<int> path;
+    path.push_back(i);
+    while(parent[i] != i){
+        path.push_back(parent[i]);
+        i = parent[i];
+    }
+    reverse(path.begin(),path.end());
+    for(auto i : path)
+        cout<<i<<" ";
     cout<<endl;
 }
