@@ -7,7 +7,7 @@ class dsu{
     dsu(int v){
         rank.resize(v+1,0);
         parent.resize(v+1);
-        for(int i=0;i<v;i++)
+        for(int i=0;i<=v;i++)
             parent[i] = i;
     }
     int findpar(int node){

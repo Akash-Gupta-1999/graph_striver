@@ -2,8 +2,8 @@
 using namespace std;
 
 class dsu{
-    vector<int> size,parent;
     public :
+    vector<int> size,parent;
     dsu(int v){
         size.resize(v+1,1);
         parent.resize(v+1);
@@ -32,19 +32,27 @@ class dsu{
 };
 
 int main(){
-    dsu p(7);
-    p.unionbysize(1,2);
-    p.unionbysize(2,3);
-    p.unionbysize(4,5);
-    p.unionbysize(6,7);
-    p.unionbysize(5,6);
-    if(p.findpar(3) == p.findpar(7))
-        cout<<"same"<<endl;
-    else    
-        cout<<"not same"<<endl;
-    p.unionbysize(3,7);
-    if(p.findpar(3) == p.findpar(7))
-        cout<<"same"<<endl;
-    else    
-        cout<<"not same"<<endl;
+    int n = 10;
+    vector<vector<int>> stones = {{33,41},{12,38},{7,45},{7,19},{28,30},{7,24},{2,34},{7,9},{4,9},{2,8}};
+    int row = 0,col = 0;
+    for(int i=0;i<n;i++){
+        row = max(stones[i][0],row);
+        col = max(stones[i][1],col);
+    }
+    dsu ds(row+col+1);
+    unordered_map<int,int> stones_v;
+    for(auto it : stones){
+        int i = it[0];
+        int j = it[1] + row + 1;
+        ds.unionbysize(i,j);
+        stones_v[i] = 1;
+        stones_v[j] = 1;
+    }
+    int c = 0;
+    for(auto it : stones_v){
+        cout<<it.first<<" ";
+        if(ds.findpar(it.first) == it.first)
+            c++;
+    }
+    cout<<n - c<<endl;
 }
